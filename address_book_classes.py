@@ -120,15 +120,19 @@ class AddressBook(UserDict):
         del self.data[name]
 
     def search(self, value):
-        if self.has_record(value):
-            return self.get_record(value)
-
+        record_result = []
         for record in self.get_all_record().values():
-            for phone in record.phones:
-                if phone.value == value:
-                    return record
+            if value in record.name.value:
+                record_result.append(record)
+                continue
 
-        raise ValueError("Contact with this value does not exist.")
+            for phone in record.phones:
+                if value in phone.value:
+                    record_result.append(record)
+
+        if not record_result:
+            raise ValueError("Contacts with this value does not exist.")
+        return record_result
 
     def iterator(self, count=5):
         page = []

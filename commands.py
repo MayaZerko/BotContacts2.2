@@ -61,7 +61,12 @@ def search_func(value):
     :param value: Контакт котрий шукаємо.
     :return: Повертає дані контакту.
     """
-    return contacts_dict.search(value.strip()).get_info()
+    search_records = ''
+    records = contacts_dict.search(value.strip())
+
+    for record in records:
+        search_records += f"{record.get_info()}\n"
+    return search_records
 
 
 @input_error
